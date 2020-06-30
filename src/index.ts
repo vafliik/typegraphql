@@ -4,21 +4,18 @@ import Express from "express";
 import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
 
-import { RegisterResolver } from "./modules/user/Register"
 import session from "express-session";
 import cors from "cors";
 import connectRedis from "connect-redis";
 import { redis } from "./redis";
-import { LoginResolver } from "./modules/user/Login";
-import { MeResolver } from "./modules/user/Me";
-
 
 
 const main = async () => {
+    
     await createConnection();
 
     const schema = await buildSchema({
-        resolvers: [RegisterResolver, LoginResolver, MeResolver],
+        resolvers: [__dirname + '/modules/**/*.ts'],
         authChecker: ({ context: { req } },) => {
             return !!req.session.userId;
         }
