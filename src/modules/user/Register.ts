@@ -15,7 +15,6 @@ export class RegisterResolver {
         return "Hello Dummy";
     }
 
-    @UseMiddleware(logger)
     @Mutation(() => User)
     async register(
         @Arg('data') { firstName, lastName, email, password }: RegisterInput,
